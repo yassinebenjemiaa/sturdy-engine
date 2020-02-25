@@ -1,0 +1,49 @@
+def PatternCount(Text, Pattern):
+    count = 0
+    for i in range(len(Text)-len(Pattern)+1):
+        if Text[i:i+len(Pattern)] == Pattern:
+            count = count+1
+    return count
+def FrequencyMap(Text, k):
+    # your code here
+    freq = {}
+    for i in range(len(Text)-k+1):
+        pattern = Text[i:i+k]
+        if pattern not in freq.keys():
+            freq[pattern] = 1
+        else:
+            freq[pattern] += 1
+    return freq
+def FrequentWords(Text, k):
+    # your code here
+    words = []
+    freq = FrequencyMap(Text, k)
+    m = max(freq.values())
+    for key in freq:
+        if freq[key] == m : words.append(key)
+    return words
+def Reverse(Pattern):
+    # your code here
+    return Pattern[::-1]
+def Complement(Pattern):
+    # your code here
+    basepairs = {"A":"T", "G":"C", "T":"A", "C":"G"}
+    complement = ""
+    for base in Pattern:
+        complement += basepairs.get(base)
+    return complement
+def ReverseComplement(Pattern):   
+    return Reverse(Complement(Pattern))
+def PatternMatching(Pattern, Genome):
+    positions = [] # output variable
+    for i in range(len(Genome)-len(Pattern)+1):
+        if Pattern==Genome[i:i+len(Pattern)] : positions.append(i)
+    return positions
+def SymbolArray(Genome, symbol):
+    # type your code here
+    array = {}
+    n = len(Genome)
+    ExtendedGenome = Genome + Genome[0:n//2]
+    for i in range(n):
+        array[i] = PatternCount(symbol, ExtendedGenome[i:i+(n//2)])
+    return array
