@@ -148,3 +148,23 @@ def Score(Motifs):
     for i in range(len(Motifs)):
         score += Hamming(Motifs[i], Consensus(Motifs))
     return score
+def ProfileMostProbableKmer(text, k, Profile):
+    pr = {}
+    most_prob_kmer = []
+    n = len(text)
+    for i in range(n-k+1):
+        kmer=text[i:i+k]
+        pr[kmer] = Pr(text[i:i+k],Profile) 
+    m=max(pr.values())
+    for key,value in pr.items():
+        if value == m:
+            most_prob_kmer.append(key)
+    return most_prob_kmer[0]
+def Pr(Text, Profile):
+    # insert your code here
+    p = 1
+    for i in range(len(Text)):
+        p = p * Profile[Text[i]][i]
+    return p
+
+        
