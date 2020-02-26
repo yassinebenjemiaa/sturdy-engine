@@ -92,3 +92,59 @@ def ApproximatePatternCount(Pattern, Text, d):
         if HammingDistance(Pattern,Text[i:i+len(Pattern)])<=d : count+=1
             
     return count
+def Count(Motifs):
+    count = {} # initializing the count dictionary
+    k = len(Motifs[0])
+    count = {'A':[0]*k,'C':[0]*k,'G':[0]*k,'T':[0]*k}
+    t=len(Motifs)
+    for i in range(t):
+        for j in range(k):
+            symbol=Motifs[i][j]
+            count[symbol][j]+=1
+    return count
+   # Input:  A list of kmers Motifs
+# Output: the profile matrix of Motifs, as a dictionary of lists.
+def Profile(Motifs):
+    t = len(Motifs)
+    k = len(Motifs[0])
+    profile = {}
+    k = len(Motifs[0])
+    profile = {'A':[0]*k,'C':[0]*k,'G':[0]*k,'T':[0]*k}
+    t=len(Motifs)
+    for i in range(t):
+        for j in range(k):
+            symbol=Motifs[i][j]
+            profile[symbol][j]+=1/t
+        
+    return profile
+    # Input:  A set of kmers Motifs
+# Output: A consensus string of Motifs.
+def Consensus(Motifs):
+
+    t = len(Motifs)
+    k = len(Motifs[0])
+    profile = {}
+    k = len(Motifs[0])
+    count = {'A':[0]*k,'C':[0]*k,'G':[0]*k,'T':[0]*k}
+    t=len(Motifs)
+    for i in range(t):
+        for j in range(k):
+            symbol=Motifs[i][j]
+            count[symbol][j]+=1
+        
+    consensus = ""
+    for j in range(k):
+        m = 0
+        frequentSymbol = ""
+        for symbol in "ACGT":
+            if count[symbol][j] > m:
+                m = count[symbol][j]
+                frequentSymbol = symbol
+        consensus += frequentSymbol
+    return consensus
+def Score(Motifs):
+    # Insert code here
+    score = 0
+    for i in range(len(Motifs)):
+        score += Hamming(Motifs[i], Consensus(Motifs))
+    return score
