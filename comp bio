@@ -191,5 +191,35 @@ def Entropy(motifs):
             else:
                 entropy += j*(math.log(j,2))
     return entropy *-1
+def CountWithPseudocounts(Motifs):
+    count = {} # initializing the count dictionary
+    k = len(Motifs[0])
+    count = {'A':[1]*k,'C':[1]*k,'G':[1]*k,'T':[1]*k}
+    t=len(Motifs)
+    for i in range(t):
+        for j in range(k):
+            symbol=Motifs[i][j]
+            count[symbol][j]+=1
+    return count
+ ##not mine!
+ def ProfileWithPseudocounts(Motifs):
+    matrix = CountWithPseudocounts(Motifs)
+    n = len(Motifs)
 
-        
+    for array in matrix.values():
+        for i in range(len(array)):
+            array[i] /= n + 4
+    return matrix
+
+
+def CountWithPseudocounts(Motifs):
+    count = {}
+    for s in 'ACGT':
+        count[s] = [1] * len(Motifs[0])
+
+    for i in range(len(Motifs)):
+        for j in range(len(Motifs[0])):
+            count[Motifs[i][j]][j] += 1
+    return count
+ ##
+ 
